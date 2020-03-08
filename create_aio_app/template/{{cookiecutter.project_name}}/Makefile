@@ -46,7 +46,7 @@ help:
 	@echo '  ${YELLOW}make${RESET} ${GREEN}<target>${RESET}'
 	@echo ''
 	@echo 'Targets:'
-	@awk '/^[a-zA-Z\-]+:/ { \
+	@awk '/^[a-zA-Z\-\_]+:/ { \
 		helpMessage = match(lastLine, /^## (.*)/); \
 		if (helpMessage) { \
 		    if (index(lastLine, "|") != 0) { \
@@ -109,10 +109,6 @@ migrate:
 	@docker exec -it $(PROJECT_NAME) alembic -n alembic:dev upgrade head;
 
 {%- endif %}
-
-## Runs application with production config.
-run_production:
-	@docker-compose -f docker-compose.yml -f docker-compose.production.yml up
 
 ## Runs application with development config.
 adev: {%- if cookiecutter.use_postgres == 'y' or cookiecutter.use_redis == 'y' %} wait_resources {% endif %}
